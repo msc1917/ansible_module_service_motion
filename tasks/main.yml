@@ -1,3 +1,9 @@
 ---
 - name: Install motion
   include_tasks: install.yml
+
+- name: Configure motion
+  include_tasks: config-motion.yml
+
+- name: Configure motioneye
+  include_tasks: config-motioneye.yml

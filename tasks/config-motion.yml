@@ -1,0 +1,21 @@
+---
+- name: Enable motion-daemon
+  lineinfile:
+    path: /etc/default/motion
+    regexp: '^start_motion_daemon='
+    line: 'start_motion_daemon=yes'
+    state: present
+  become: yes
+
+- name: Configure /etc/motion/motion.conf
+  lineinfile:
+    path: /etc/motion/motion.conf
+    regexp: "^{{ item.key }}"
+    insertafter: "^; {{ item.key }}"
+    line: "{{ item.key }} {{ item.value }}"
+    state: present
+  become: yes
+  notify: restart motion-daemon
+  with_dict: 
+    "text_left":            "{{ inventory_hostname_short }} %t"
+    "webcontrol_localhost": "off"

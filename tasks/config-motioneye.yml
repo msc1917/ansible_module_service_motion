@@ -1,0 +1,37 @@
+--
+- name: Create a directory for motioneye
+  file:
+    path: {{ item }}
+    state: directory
+    mode: '0755'
+  become: yes
+  with_items: 
+    - /etc/motioneye
+    - /var/lib/motioneye
+
+- name: Copy file with owner and permissions
+  copy:
+    src: /usr/local/share/motioneye/extra/motioneye.conf.sample
+    dest: /etc/motioneye/motioneye.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: Copy file with owner and permissions
+  copy:
+    src: /usr/local/share/motioneye/extra/motioneye.systemd-unit-local
+    dest: /etc/systemd/system/motioneye.service
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
+- name: set up motioneye-daemon
+  systemd:
+    name: motion
+    daemon_reload: yes
+    state: started
+    enabled: yes
+  become: yes
+  ignore_errors: yes
