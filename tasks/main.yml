@@ -1,0 +1,3 @@
+---
+- name: Install motion
+  include_tasks: install.yml

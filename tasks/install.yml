@@ -1,0 +1,7 @@
+---
+- name: Install motion-Package
+  apt:
+    name: [ "motion" ]
+    state: present
+    update_cache: no
+  become: yes
