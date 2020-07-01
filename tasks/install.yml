@@ -1,7 +1,7 @@
 ---
 - name: Install motion-Package
   apt:
-    name: [ "motion", "ffmpeg", "v4l-utils", "python-pip", "python-dev", "python-setuptools", "curl", "libssl-dev", "libcurl4-openssl-dev", "libjpeg-dev", "libz-dev" ]
+    name: [ "motion", "ffmpeg", "v4l-utils", "python-pip", "python-dev", "python-setuptools", "python-pil", "curl", "libssl-dev", "libcurl4-openssl-dev", "libjpeg-dev", "libz-dev" ]
     state: present
     update_cache: no
   become: yes

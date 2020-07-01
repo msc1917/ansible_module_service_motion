@@ -7,6 +7,20 @@
     state: present
   become: yes
 
+- name: Configure /boot/config.txt
+  lineinfile:
+    path: /boot/config.txt
+    regexp: "^{{ item.key }}"
+    insertafter: '[all]'
+    line: "{{ item.key }}={{ item.value }}"
+    state: present
+  become: yes
+  notify: reboot Raspberry Pi
+  with_dict: 
+    "start_x":            "1"
+    "disable_camera_led": "1"
+    "gpu_mem":            "128"
+
 - name: Configure /etc/motion/motion.conf
   lineinfile:
     path: /etc/motion/motion.conf
@@ -19,3 +33,9 @@
   with_dict: 
     "text_left":            "{{ inventory_hostname_short }} %t"
     "webcontrol_localhost": "off"
+    "ffmpeg_video_codec":   "mp4"
+    "target_dir":           "/server/motion"
+    "snapshot_filename":    "images/%Y/%Y%m%d/%Y%m%d-%H%M%S_%v-%q-%t-snapshot"
+    "picture_filename":     "images/%Y/%Y%m%d/%Y%m%d-%H%M%S_%v-%q-%t"
+    "movie_filename":       "videos/%Y/%Y%m%d/%Y%m%d-%H%M%S_%v-%q-%t"
+    "timelapse_filename":   "videos/%Y/%Y%m%d/%Y%m%d-%H%M%S_%v-%q-%t-timelapse"

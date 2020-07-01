@@ -1,7 +1,7 @@
---
+---
 - name: Create a directory for motioneye
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: directory
     mode: '0755'
   become: yes
@@ -13,15 +13,31 @@
   copy:
     src: /usr/local/share/motioneye/extra/motioneye.conf.sample
     dest: /etc/motioneye/motioneye.conf
+    remote_src: yes
     owner: root
     group: root
     mode: '0644'
   become: yes
 
+- name: Configure /etc/motioneye/motioneye.conf
+  lineinfile:
+    path: /etc/motioneye/motioneye.conf
+    regexp: "^{{ item.key }}"
+    insertafter: "^#{{ item.key }}"
+    line: "{{ item.key }} {{ item.value }}"
+    state: present
+  become: yes
+  notify: restart motioneye-daemon
+  with_dict: 
+    "conf_path":            "/etc/motion"
+    "log_path":             "/var/log/motion"
+    "port":                 "80"
+
 - name: Copy file with owner and permissions
   copy:
     src: /usr/local/share/motioneye/extra/motioneye.systemd-unit-local
     dest: /etc/systemd/system/motioneye.service
+    remote_src: yes
     owner: root
     group: root
     mode: '0644'

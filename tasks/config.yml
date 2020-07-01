@@ -1,0 +1,24 @@
+---
+- name: Create directory for file storage
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: "root"
+    group: "root"
+  become: yes
+  with_items: 
+    - /server
+
+- name: Create a directory for motioneye
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: "motion"
+    group: "motion"
+  become: yes
+  with_items: 
+    - /server/motion
+    - /server/motion/images
+    - /server/motion/videos

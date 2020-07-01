@@ -7,3 +7,17 @@
     enabled: yes
   become: yes
   ignore_errors: yes
+
+- name: restart motioneye-daemon
+  systemd:
+    name: motioneye
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+  become: yes
+  ignore_errors: yes
+
+- name: reboot Raspberry Pi
+  reboot:
+  become: yes
+  ignore_errors: yes

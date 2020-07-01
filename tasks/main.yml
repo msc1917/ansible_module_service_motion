@@ -2,6 +2,9 @@
 - name: Install motion
   include_tasks: install.yml
 
+- name: Configure enviroment
+  include_tasks: config.yml
+
 - name: Configure motion
   include_tasks: config-motion.yml
 
