@@ -16,8 +16,3 @@
     enabled: yes
   become: yes
   ignore_errors: yes
-
-- name: reboot Raspberry Pi
-  reboot:
-  become: yes
-  ignore_errors: yes
