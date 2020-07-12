@@ -7,20 +7,6 @@
     state: present
   become: yes
 
-- name: Configure /boot/config.txt
-  lineinfile:
-    path: /boot/config.txt
-    regexp: "^{{ item.key }}"
-    insertafter: '[all]'
-    line: "{{ item.key }}={{ item.value }}"
-    state: present
-  become: yes
-  notify: reboot Raspberry Pi
-  with_dict: 
-    "start_x":            "1"
-    "disable_camera_led": "1"
-    "gpu_mem":            "128"
-
 - name: Configure /etc/motion/motion.conf
   lineinfile:
     path: /etc/motion/motion.conf
