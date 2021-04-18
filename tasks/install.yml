@@ -3,7 +3,8 @@
   apt:
     name: [ "motion", "ffmpeg", "v4l-utils", "python-pip", "python-dev", "python-setuptools", "python-pil", "curl", "libssl-dev", "libcurl4-openssl-dev", "libjpeg-dev", "libz-dev" ]
     state: present
-    update_cache: no
+    update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+    cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
   become: yes
 
 - name: Install motioneye
